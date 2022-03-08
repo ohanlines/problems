@@ -9,3 +9,12 @@
                            (reduce + (map kuadrat xx)))
                          (< x)))
                   xs))))
+
+(defn least-common-multiple [xs]
+  (let [x    (apply max xs)
+        item (remove #{x} xs)]
+    (loop [ref x]
+      (if (= (mapv #(rem ref %) item)
+             (mapv #(* 0 %) item))
+        ref
+        (recur (+ ref x))))))
