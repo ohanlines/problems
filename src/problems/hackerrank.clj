@@ -277,6 +277,7 @@
                 (< n 26)           n
                 :else (rem n 26)))))
 
+;;
 ;; soal traveloka
 (defn loop-decrement [xs]
   (->> (let [new-xs (vec (conj (reverse (into '() xs)) 0))]
