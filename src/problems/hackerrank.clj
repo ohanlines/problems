@@ -276,3 +276,28 @@
                 (zero? (rem n 26)) 0
                 (< n 26)           n
                 :else (rem n 26)))))
+
+;; soal traveloka
+(defn loop-decrement [xs]
+  (->> (let [new-xs (vec (conj (reverse (into '() xs)) 0))]
+         (loop [res [] xs new-xs]
+           (if (= 1 (count xs))
+             res
+             (recur (conj res (vector (first xs) (second xs)))
+                    (rest xs)))))
+       (mapv #(* -1 (apply - %)))))
+
+(defn slowest-key-press [key-times]
+  (let [alp                    (mapv str "abcdefghijklmnopqrstuvwxyz")
+        key-press              (mapv first key-times)
+        times                  (mapv second key-times)
+        time-interval          (loop-decrement times)
+        largest-interval-index (->> time-interval
+                                    (map-indexed vector)
+                                    (sort-by #(second %))
+                                    (last)
+                                    (first))
+        key-press-alp          (->> largest-interval-index
+                                    (get key-press)
+                                    (get alp))]
+    key-press-alp))
